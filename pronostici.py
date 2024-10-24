@@ -161,10 +161,8 @@ st.markdown(
 
 url = 'https://fbref.com/it/comp/18/calendario/Risultati-e-partite-di-Serie-B'
 response = requests.get(url)
-#soup = BeautifulSoup(response.text, 'html.parser')
-response_text = response.content.decode('utf-8', errors='ignore')
+soup = BeautifulSoup(response.text, 'html.parser')
 
-soup = BeautifulSoup(response_text, 'html.parser')
 
 # Trova la tabella con i dati desiderati
 table = soup.find('table')
