@@ -191,8 +191,8 @@ df_forecast= df_forecast[df_forecast['Data'] > data_attuale]
 df_forecast = df_forecast.rename(columns={'Casa': 'HomeTeam', 'Ospiti': 'AwayTeam'})
 
 df_forecast=df_forecast[['Data','HomeTeam', 'AwayTeam']]
-#df_forecast['HomeTeam'] = df_forecast['HomeTeam'].replace('Südtirol', 'Sudtirol')
-#df_forecast['AwayTeam'] = df_forecast['AwayTeam'].replace('Südtirol', 'Sudtirol')
+df_forecast['HomeTeam'] = df_forecast['HomeTeam'].replace('Südtirol', 'Sudtirol')
+df_forecast['AwayTeam'] = df_forecast['AwayTeam'].replace('Südtirol', 'Sudtirol')
 df_forecast.reset_index(inplace=True)
 
 X_forecast = df_forecast[['HomeTeam', 'AwayTeam']]
