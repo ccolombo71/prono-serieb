@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
+import requests
+from io import StringIO
 
 st.set_page_config(page_title="Pronostici con il Machine Learning")
 st.title('Pronostici partite SERIE B con il Machine Learning')
@@ -29,12 +31,17 @@ def load_dataframes():
         url = f'https://www.football-data.co.uk/mmz4281/{year:02d}{year + 1:02d}/I2.csv'
         df_name = f'df{year:02d}'
         
-        # Carica il CSV ignorando o sostituendo i caratteri problematici
+        # Scarica il contenuto come testo
         try:
-            globals()[df_name] = pd.read_csv(url, encoding='utf-8', errors='replace')  # Usa 'replace' per sostituire caratteri problematici
+            response = requests.get(url)
+            response.encoding = 'ISO-8859-1'  # Forza un encoding che dovrebbe gestire i caratteri speciali
+            csv_text = response.text
+
+            # Converte il testo in un oggetto file-like e legge come CSV
+            globals()[df_name] = pd.read_csv(StringIO(csv_text))
             dataframes[df_name] = globals()[df_name]
-        except UnicodeDecodeError as e:
-            print(f"Errore di decoding per {url}: {e}")
+        except Exception as e:
+            print(f"Errore durante il caricamento del CSV da {url}: {e}")
     
     return dataframes
 
