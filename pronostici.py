@@ -31,7 +31,7 @@ def load_dataframes():
         
         # Carica il CSV specificando l'encoding e gestendo gli errori
         try:
-            globals()[df_name] = pd.read_csv(url, encoding='ISO-8859-1')  # Specifica l'encoding qui
+            globals()[df_name] = pd.read_csv(url, encoding='latin1')  # Specifica l'encoding qui
             dataframes[df_name] = globals()[df_name]
         except UnicodeDecodeError as e:
             print(f"Errore di decoding per {url}: {e}")
@@ -55,7 +55,7 @@ for df in dfs:
     df['x_FTAG_R'] = df.groupby('AwayTeam')['FTAG'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True)- df['FTAG']
     df['x_FTHGS_R'] = df.groupby('HomeTeam')['FTAG'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True) - df['FTAG']
     df['x_FTAGS_R'] = df.groupby('AwayTeam')['FTHG'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True) - df['FTHG']
-   # df['x_HS'] = df.groupby('HomeTeam')['HS'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True) - df['HS']
+    df['x_HS'] = df.groupby('HomeTeam')['HS'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True) - df['HS']
     df['x_AS'] = df.groupby('AwayTeam')['AS'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True)- df['AS']
     df['x_HST'] = df.groupby('HomeTeam')['HST'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True) - df['HST']
     df['x_AST'] = df.groupby('AwayTeam')['AST'].rolling(window=3, min_periods=1).sum().reset_index(level=0, drop=True)- df['AST']
