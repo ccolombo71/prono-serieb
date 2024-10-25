@@ -31,7 +31,7 @@ def load_dataframes():
         
         # Carica il CSV specificando l'encoding e gestendo gli errori
         try:
-            globals()[df_name] = pd.read_csv(url, encoding='latin1')  # Specifica l'encoding qui
+            globals()[df_name] = pd.read_csv(url, encoding='utf-8', errors='replace')  # Specifica l'encoding qui
             dataframes[df_name] = globals()[df_name]
         except UnicodeDecodeError as e:
             print(f"Errore di decoding per {url}: {e}")
