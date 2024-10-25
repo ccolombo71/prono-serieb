@@ -29,9 +29,9 @@ def load_dataframes():
         url = f'https://www.football-data.co.uk/mmz4281/{year:02d}{year + 1:02d}/I2.csv'
         df_name = f'df{year:02d}'
         
-        # Carica il CSV specificando l'encoding e gestendo gli errori
+        # Carica il CSV ignorando o sostituendo i caratteri problematici
         try:
-            globals()[df_name] = pd.read_csv(url, encoding='utf-8', errors='replace')  # Specifica l'encoding qui
+            globals()[df_name] = pd.read_csv(url, encoding='utf-8', errors='replace')  # Usa 'replace' per sostituire caratteri problematici
             dataframes[df_name] = globals()[df_name]
         except UnicodeDecodeError as e:
             print(f"Errore di decoding per {url}: {e}")
